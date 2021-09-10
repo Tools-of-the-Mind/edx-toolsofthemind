@@ -11,6 +11,10 @@ See: Create a new Django app in its own Git repository
 import logging
 
 from django.apps import AppConfig
+from edx_django_utils.plugins import PluginSettings, PluginURLs
+from edx_proctoring.runtime import set_runtime_service
+from openedx.core.djangoapps.plugins.constants import ProjectType, SettingsType
+
 
 log = logging.getLogger(__name__)
 
@@ -30,12 +34,12 @@ class TOMConfig(AppConfig):
         #
         # import toolsofthemind.urls.py
         # url(r"^toolsofthemind/", include((urls, "toolsofthemind"), namespace="toolsofthemind")),
-        "url_config": {
-            "lms.djangoapp": {
-                "namespace": "toolsofthemind",
-                "regex": "^toolsofthemind/",
-                "relative_path": "urls",
-            },
+        PluginURLs.CONFIG: {
+            ProjectType.LMS: {
+                PluginURLs.NAMESPACE: "toolsofthemind",
+                PluginURLs.REGEX: "^toolsofthemind/",
+                PluginURLs.RELATIVE_PATH: "urls",
+            }
         },
         # mcdaniel Sep-2021
         # this is how you inject settings into lms.envs.common.py and lms.envs.production.py
@@ -44,11 +48,11 @@ class TOMConfig(AppConfig):
         # This dict causes all constants defined in this settings/common.py and settings.production.py
         # to be injected into edx-platform/lms/envs/common.py and edx-platform/lms/envs/production.py
         # Refer to settings/common.py and settings.production.py for example implementation patterns.
-        "settings_config": {
-            "lms.djangoapp": {
-                "common": {"relative_path": "settings.common"},
-                "production": {"relative_path": "settings.production"},
-            },
+        PluginSettings.CONFIG: {
+            ProjectType.LMS: {
+                SettingsType.PRODUCTION: {PluginSettings.RELATIVE_PATH: "settings.production"},
+                SettingsType.COMMON: {PluginSettings.RELATIVE_PATH: "settings.common"},
+            }
         },
     }
 
