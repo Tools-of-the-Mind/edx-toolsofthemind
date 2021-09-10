@@ -44,7 +44,7 @@ class TOMCourseGroups(TimeStampedModel):
     )
 
     class Meta:
-        ordering = "created"
+        ordering = ["created"]
 
     def __str__(self):
         return self.course_group
