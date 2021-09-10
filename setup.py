@@ -46,7 +46,6 @@ setup(
         # https://github.com/edx/edx-platform/blob/main/setup.py#L88
         "lms.djangoapp": [
             "toolsofthemind = toolsofthemind.apps:TOMConfig",
-            "toolsofthemind.courseware = toolsofthemind.courseware.apps:CoursewareConfig",
         ],
     },
     extras_require={
