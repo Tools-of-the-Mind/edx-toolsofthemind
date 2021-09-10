@@ -7,6 +7,11 @@ An Open edX plugin that implement custom data models for additional Tools of the
 
 ![UI Sample Data](doc/ui-spec.png "Sample Data")
 
+This sample data would be implemented using Django Admin as per the following example:
+
+![Django Admin Sample Data](doc/django-admin-sample.png "Django Admin Sample Data")
+
+
 ## Installation on native build
 
 
