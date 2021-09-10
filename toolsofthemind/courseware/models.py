@@ -97,6 +97,8 @@ class TOMCourseMenu(TimeStampedModel):
         on_delete=models.CASCADE,
     )
 
+    required = models.BooleanField(default=False)
+
     class Meta:
         unique_together = (("course_subgroup", "course"),)
         ordering = ("course_subgroup", "course")
