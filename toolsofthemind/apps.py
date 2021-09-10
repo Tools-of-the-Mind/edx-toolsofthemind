@@ -12,9 +12,7 @@ import logging
 
 from django.apps import AppConfig
 from edx_django_utils.plugins import PluginSettings, PluginURLs
-from edx_proctoring.runtime import set_runtime_service
 from openedx.core.djangoapps.plugins.constants import ProjectType, SettingsType
-
 
 log = logging.getLogger(__name__)
 
@@ -57,4 +55,6 @@ class TOMConfig(AppConfig):
     }
 
     def ready(self):
+        from . import signals  # pylint: disable=unused-import, import-outside-toplevel
+
         log.debug("{label} is ready.".format(label=self.label))
