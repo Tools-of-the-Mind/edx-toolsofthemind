@@ -17,4 +17,6 @@ class CoursewareConfig(AppConfig):
     verbose_name = "Tools of the Mind Courseware Module Enhancements"
 
     def ready(self):
+        from . import signals  # pylint: disable=unused-import, import-outside-toplevel
+
         log.debug("{label} is ready.".format(label=self.label))
