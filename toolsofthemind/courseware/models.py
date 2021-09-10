@@ -36,17 +36,19 @@ class TOMCourseGroups(TimeStampedModel):
     Tools of the Mind course directory Main Menu Labels
     Example: WORKSHOP 1
     """
+
     course_group = models.CharField(
         primary_key=True,
         max_length=50,
         default="new course group",
-        help_text=_("Tools of the Mind course group description. Example: PreK Workshop 1"))
+        help_text=_("Tools of the Mind course group description. Example: PreK Workshop 1"),
+    )
 
     class Meta:
-        ordering = ('created')
+        ordering = "created"
 
     def __str__(self):
-        return (self.course_group)
+        return self.course_group
 
 
 class TOMCourseSubgroups(TimeStampedModel):
@@ -54,6 +56,7 @@ class TOMCourseSubgroups(TimeStampedModel):
     Tools of the Mind course directory Main Menu sub-labels
     Example: OPENING GROUP ACTIVITIES
     """
+
     course_group = models.ForeignKey(
         TOMCourseGroups,
         db_constraint=True,
@@ -62,24 +65,26 @@ class TOMCourseSubgroups(TimeStampedModel):
     ordinal_position = models.IntegerField(
         default=0,
         help_text="The ordinal position of this record in relation to all other"
-                  "Sub Group items for this Tools of the Mind Course Group."
+        "Sub Group items for this Tools of the Mind Course Group.",
     )
     course_subgroup = models.CharField(max_length=50, blank=False, default="new subgroup")
 
     class Meta:
         unique_together = (
-            ('course_group', 'course_subgroup'),
-            ('ordinal_position', 'course_subgroup'),)
-        ordering = ('course_group', 'ordinal_position')
+            ("course_group", "course_subgroup"),
+            ("ordinal_position", "course_subgroup"),
+        )
+        ordering = ("course_group", "ordinal_position")
 
     def __str__(self):
-        return (self.course_group + ':' + self.course_subgroup)
+        return self.course_group + ":" + self.course_subgroup
 
 
 class TOMCourseMenu(TimeStampedModel):
     """
     The set of Open edX courses associated with one TOM Course Group / Sub-group combination.
     """
+
     course_subgroup = models.ForeignKey(
         TOMCourseSubgroups,
         db_constraint=True,
@@ -93,17 +98,18 @@ class TOMCourseMenu(TimeStampedModel):
     )
 
     class Meta:
-        unique_together = (('course_subgroup', 'course'), )
-        ordering = ('course_subgroup', 'course')
+        unique_together = (("course_subgroup", "course"),)
+        ordering = ("course_subgroup", "course")
 
     def __str__(self):
-        return (self.course_group + ':' + self.course_group)
+        return self.course_group + ":" + self.course_group
 
 
 class TOMStudentCourseGroups(TimeStampedModel):
     """
     The set of TOM Course Groups associated with one learner.
     """
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     course_group = models.ForeignKey(
@@ -115,7 +121,7 @@ class TOMStudentCourseGroups(TimeStampedModel):
 
 
 @receiver(models.signals.post_save, sender=User)
-def _add_tom_student_course_groups(sender, **kwargs):   # pylint: disable=unused-argument
+def _add_tom_student_course_groups(sender, **kwargs):  # pylint: disable=unused-argument
     """
     Create one TOMStudentCourseGroups record for each new Django user record created.
     """

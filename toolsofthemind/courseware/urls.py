@@ -13,5 +13,11 @@ from toolsofthemind.courseware.course_overviews import urls as course_overviews_
 app_name = "toolsofthemind.courseware"
 
 urlpatterns = [
-    url(r"^course_overviews/", include((course_overviews_urls.urlpatterns, "toolsofthemind.courseware"), namespace="toolsofthemind_courseware_course_overviews")),
+    url(
+        r"^course_overviews/",
+        include(
+            (course_overviews_urls.urlpatterns, "toolsofthemind.courseware"),
+            namespace="toolsofthemind_courseware_course_overviews",
+        ),
+    ),
 ]
