@@ -1,6 +1,13 @@
-# edx-toolsofthemind
+# edx-toolsofthemind Django Plugin
 
-## Usage
+[![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
+
+
+An Open edX plugin that implement custom data models for additional Tools of the Mind categorization for presentation of its course library to registered learners.
+
+![UI Sample Data](doc/ui-spec.png "Sample Data")
+
+## Installation on native build
 
 
 ```bash
@@ -10,6 +17,7 @@ source /edx/app/edxapp/venvs/edxapp/bin/activate
 pip install git+https://github.com/Tools-of-the-Mind/edx-toolsofthemind.git
 ```
 
+## Developer Notes
 
 ```bash
 # to run tests
