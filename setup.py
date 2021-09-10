@@ -6,7 +6,7 @@ from toolsofthemind.version import __version__
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name="edx-toolsofthemind",
+    name="toolsofthemind",
     version=__version__,
     packages=find_packages(),
     package_data={"": ["*.html"]},  # include any Mako templates found in this repo.
