@@ -41,11 +41,12 @@ setup(
     entry_points={
         # mcdaniel Sep-2021
         #
-        # IMPORTANT: ensure that this entry_points coincides with that of edx-platform
+        # IMPORTANT: ensure that these entry_points coincide with that of edx-platform
         #            and also that you are not introducing any name collisions.
         # https://github.com/edx/edx-platform/blob/main/setup.py#L88
         "lms.djangoapp": [
             "toolsofthemind = toolsofthemind.apps:TOMConfig",
+            "toolsofthemind.courseware = toolsofthemind.courseware.apps:CoursewareConfig",
         ],
     },
     extras_require={
