@@ -62,11 +62,10 @@ class TOMCourseSubgroups(TimeStampedModel):
         on_delete=models.CASCADE,
     )
     ordinal_position = models.IntegerField(
-        default=0,
         help_text="The ordinal position of this record in relation to all other"
         "Sub Group items for this Tools of the Mind Course Group.",
     )
-    course_subgroup = models.CharField(max_length=50, blank=False, default="new subgroup")
+    course_subgroup = models.CharField(max_length=50, blank=False)
 
     class Meta:
         unique_together = (
