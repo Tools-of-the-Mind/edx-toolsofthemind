@@ -76,7 +76,7 @@ class TOMCourseSubgroups(TimeStampedModel):
         ordering = ("course_group", "ordinal_position")
 
     def __str__(self):
-        return self.course_group + ":" + self.course_subgroup
+        return self.course_group.course_group + ":" + self.course_subgroup
 
 
 class TOMCourseMenu(TimeStampedModel):
@@ -103,7 +103,7 @@ class TOMCourseMenu(TimeStampedModel):
         ordering = ("course_subgroup", "course")
 
     def __str__(self):
-        return self.course_group + ":" + self.course_group
+        return self.course_subgroup.course_subgroup + ":" + str(self.course.id)
 
 
 class TOMStudentCourseGroups(TimeStampedModel):
@@ -119,3 +119,6 @@ class TOMStudentCourseGroups(TimeStampedModel):
         db_constraint=True,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return self.user.username + ":" + self.course_group.course_group
