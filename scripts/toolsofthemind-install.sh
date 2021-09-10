@@ -8,18 +8,8 @@
 #            path in which Tutor searches for "local" requirements
 #---------------------------------------------------------
 
-REPO_NAME="edx-toolsofthemind"
-BRANCH="main"
-INSTALL_ROOT="~/"
-INSTALL_PATH=$INSTALL_ROOT/$REPO_NAME
-
-echo "cloning Github repository "$REPO_NAME
-if [ -d $INSTALL_PATH ]; then
-    sudo rm -r $INSTALL_PATH
-fi
-git clone -b $BRANCH git@github-toolsofthemind:TransformCore/$REPO_NAME.git $INSTALL_PATH
-echo "done."
-echo "copying local installation scripts"
-cp $INSTALL_PATH/tutor-installer/*.* ~/
-chmod 755 ~/*.sh
-echo "done."
+sudo -H -u edxapp bash << EOF
+source /edx/app/edxapp/edxapp_env
+source /edx/app/edxapp/venvs/edxapp/bin/activate
+pip install git+https://github.com/Tools-of-the-Mind/edx-toolsofthemind.git
+EOF
