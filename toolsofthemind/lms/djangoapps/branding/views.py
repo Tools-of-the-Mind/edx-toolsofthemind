@@ -17,7 +17,7 @@ from common.djangoapps.edxmako.shortcuts import marketing_link
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 # toolsofthemind
-import toolsofthemind.lms.courseware.views as toolsofthemind_courseware_views
+import toolsofthemind.lms.djangoapps.courseware.views as toolsofthemind_courseware_views
 
 
 @ensure_csrf_cookie
@@ -35,11 +35,8 @@ def courses(request):
     if enable_mktg_site:
         return redirect(marketing_link("COURSES"), permanent=True)
 
-    if not settings.FEATURES.get("COURSES_ARE_BROWSABLE"):
-        raise Http404
-
-    #  we do not expect this case to be reached in cases where
-    #  marketing is enabled or the courses are not browsable
+    # if not settings.FEATURES.get("COURSES_ARE_BROWSABLE"):
+    #    raise Http404
 
     # mcdaniel sep-2021: we're only porting this def so that we can substitute
     # our modified courseware_views.courses() here.

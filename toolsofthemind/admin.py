@@ -1,3 +1,9 @@
+"""
+Lawrence McDaniel - https://lawrencemcdaniel.com
+Sep-2021
+
+toolsofthemind Django admin views.
+"""
 from django.contrib import admin
 
 from .models import TOMCourseGroups, TOMCourseSubgroups, TOMCourseMenu, TOMStudentCourseGroups
