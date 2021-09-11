@@ -45,8 +45,7 @@ def get_tom_menu_data(user, courses):
     for course_group in course_groups:
         retval.append(
             {
-                "id": course_group.id,
-                "course_group": str(course_group.course_group),
+                "course_group": course_group.course_group,
                 "subgroups": _get_subgroups_for_group(course_group, courses),
             }
         )
@@ -117,17 +116,17 @@ def test():
 
     retval = get_tom_menu_data(me, courses)
 
-        course_groups = TOMCourseGroups.objects.all()
+            course_groups = TOMCourseGroups.objects.all()
 
-            # get a list of the course groups assigned to this user.
-            course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
+                # get a list of the course groups assigned to this user.
+                course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
 
-            # get a list of all course sub-groups related to the user's course groups
-            course_subgroups_list = TOMCourseSubgroups.objects.filter(
-                course_group__in=Subquery(course_groups_list.values("course_group"))
-            )
+                # get a list of all course sub-groups related to the user's course groups
+                course_subgroups_list = TOMCourseSubgroups.objects.filter(
+                    course_group__in=Subquery(course_groups_list.values("course_group"))
+                )
 
-            # get a list of all courses related to the course sub-groups
-            course_menu = TOMCourseMenu.objects.filter(course_subgroup__in=Subquery(course_subgroups_list.values("id")))
-            course_menu = list(course_menu.values("id", "course_subgroup_id", "course_id"))
+                # get a list of all courses related to the course sub-groups
+                course_menu = TOMCourseMenu.objects.filter(course_subgroup__in=Subquery(course_subgroups_list.values("id")))
+                course_menu = list(course_menu.values("id", "course_subgroup_id", "course_id"))
     """
