@@ -49,6 +49,6 @@ def courses(request):
             "course_discovery_meanings": course_discovery_meanings,
             "programs_list": programs_list,
             # mcdaniel sep-2021: add Tools of the Mind custom menu categories
-            "menu": get_tom_menu_data(request.user, courses),
+            "menu": get_tom_menu_data(request.user, courses_list),
         },
     )
