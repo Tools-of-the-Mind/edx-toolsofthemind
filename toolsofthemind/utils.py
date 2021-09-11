@@ -119,27 +119,3 @@ def _get_courses_for_subgroup(subgroup, courses):
             retval.append(course)
 
     return retval
-
-
-def test():
-    """
-    from django.db.models import Subquery
-    from django.contrib.auth import get_user_model
-    from toolsofthemind.utils import get_tom_menu_data
-    from lms.djangoapps.courseware.courses import get_courses
-    from toolsofthemind.models import (
-        TOMCourseGroups,
-        TOMStudentCourseGroups,
-        TOMCourseSubgroups,
-        TOMCourseMenu,
-    )
-
-    User = get_user_model()
-    me = User.objects.get(username="mcdaniel")
-    courses = get_courses(me)
-
-    retval = get_tom_menu_data(me, courses)
-
-    """
-
-    return None
