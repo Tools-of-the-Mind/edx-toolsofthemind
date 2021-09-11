@@ -17,13 +17,10 @@ from lms.djangoapps.courseware.courses import get_course
 from toolsofthemind.models import (
     TOMStudentCourseGroups,
     TOMCourseSubgroups,
-    TOMCourseGroups,
     TOMCourseMenu,
 )
 
 
-@login_required
-@ensure_csrf_cookie
 def get_menu_categories(request, courses):
     """
     Return a Django ORM dictionary of the Tools of the Mind courses that are available
@@ -44,7 +41,11 @@ def get_menu_categories(request, courses):
 
     for group in course_groups:
         retval.append(
-            {"id": group.id, "course_group": group.course_group, "subgroups": _get_subgroups_for_group(group, courses)}
+            {
+                "id": group.id,
+                "course_group": str(group.course_group),
+                "subgroups": _get_subgroups_for_group(group, courses),
+            }
         )
 
     return retval
