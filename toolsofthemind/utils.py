@@ -21,7 +21,7 @@ from toolsofthemind.models import (
 )
 
 
-def get_menu_categories(user, courses):
+def get_tom_menu_data(user, courses):
     """
     Return a Django ORM dictionary of the Tools of the Mind courses that are available
     to this user.

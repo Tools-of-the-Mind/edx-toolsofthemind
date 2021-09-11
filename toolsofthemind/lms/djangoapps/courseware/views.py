@@ -18,7 +18,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 
 # this repo
-from toolsofthemind.utils import get_menu_categories
+from toolsofthemind.utils import get_tom_menu_data
 
 
 @ensure_csrf_cookie
@@ -49,6 +49,6 @@ def courses(request):
             "course_discovery_meanings": course_discovery_meanings,
             "programs_list": programs_list,
             # mcdaniel sep-2021: add Tools of the Mind custom menu categories
-            "menu": get_menu_categories(request, courses),
+            "menu": get_tom_menu_data(request.user, courses),
         },
     )
