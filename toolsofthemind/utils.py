@@ -21,14 +21,14 @@ from toolsofthemind.models import (
 )
 
 
-def get_menu_categories(request, courses):
+def get_menu_categories(user, courses):
     """
     Return a Django ORM dictionary of the Tools of the Mind courses that are available
     to this user.
 
     inputs:
     -------
-    request: a standard edx-platform Django request object
+    user: Open edX Django user object
 
     courses: list of CourseOverview objects reeturned by lms.djangoapps.courseware.courses.get_courses()
              the list of courses deemed available to the user based on whatever policies
@@ -36,7 +36,7 @@ def get_menu_categories(request, courses):
 
     see: openedx.core.djangoapps.courses.models.CourseOverview
     """
-    course_groups = TOMStudentCourseGroups.objects.filter(user=request.user)
+    course_groups = TOMStudentCourseGroups.objects.filter(user=user)
     retval = []
 
     for group in course_groups:
@@ -95,12 +95,12 @@ def _get_courses_for_subgroup(subgroup, courses):
     return retval
 
 
-def test(request):
+def test():
     """
     course_groups = TOMCourseGroups.objects.all()
 
     # get a list of the course groups assigned to this user.
-    course_groups_list = TOMStudentCourseGroups.objects.filter(user=request.user)
+    course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
 
     # get a list of all course sub-groups related to the user's course groups
     course_subgroups_list = TOMCourseSubgroups.objects.filter(
