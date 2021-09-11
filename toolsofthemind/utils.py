@@ -5,6 +5,9 @@ Sep-2021
 toolsofthemind utils.
 """
 
+# Python
+import logging
+
 # Django
 from django.db.models import Subquery
 
@@ -19,6 +22,8 @@ from toolsofthemind.models import (
     TOMCourseSubgroups,
     TOMCourseMenu,
 )
+
+log = logging.getLogger(__name__)
 
 
 def get_tom_menu_data(user, courses):
@@ -102,6 +107,11 @@ def _get_courses_for_subgroup(subgroup, courses):
         try:
             course = get_course(course_locator)
         except CourseRunNotFound:
+            log.error(
+                "CourseRunNotFound exception encountered for {data_type} {course_locator}".format(
+                    course_locator=course_locator, data_type=type(course_locator)
+                )
+            )
             course = None
 
         if course and course in list(courses):
@@ -130,3 +140,5 @@ def test():
     retval = get_tom_menu_data(me, courses)
 
     """
+
+    return None
