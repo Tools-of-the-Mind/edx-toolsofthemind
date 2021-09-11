@@ -10,6 +10,7 @@ from django.db.models import Subquery
 
 # Open edX
 from lms.djangoapps.courseware.courses import get_course
+from lms.djangoapps.courseware.exceptions import CourseRunNotFound
 
 # This repo
 from toolsofthemind.models import (
@@ -90,8 +91,20 @@ def _get_courses_for_subgroup(subgroup, courses):
 
     for course_menu_item in courses_in_menu:
         course_locator = course_menu_item["course"]
-        course = get_course(course_locator)
-        if course in list(courses):
+
+        # get_course() returns a CourseRunNotFound exception
+        # if for example, the course run has not yet been published.
+        # there are a variety of other reasons why this exception could
+        # be raiseed.
+        #
+        # importantly, if this particular exception is raised
+        # then we should not include the course in the menu.
+        try:
+            course = get_course(course_locator)
+        except CourseRunNotFound:
+            course = None
+
+        if course and course in list(courses):
             retval.append(course)
 
     return retval
@@ -116,17 +129,4 @@ def test():
 
     retval = get_tom_menu_data(me, courses)
 
-            course_groups = TOMCourseGroups.objects.all()
-
-                # get a list of the course groups assigned to this user.
-                course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
-
-                # get a list of all course sub-groups related to the user's course groups
-                course_subgroups_list = TOMCourseSubgroups.objects.filter(
-                    course_group__in=Subquery(course_groups_list.values("course_group"))
-                )
-
-                # get a list of all courses related to the course sub-groups
-                course_menu = TOMCourseMenu.objects.filter(course_subgroup__in=Subquery(course_subgroups_list.values("id")))
-                course_menu = list(course_menu.values("id", "course_subgroup_id", "course_id"))
     """
