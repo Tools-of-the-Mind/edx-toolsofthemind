@@ -48,8 +48,8 @@ class TOMConfig(AppConfig):
         # Refer to settings/common.py and settings.production.py for example implementation patterns.
         PluginSettings.CONFIG: {
             ProjectType.LMS: {
-                SettingsType.PRODUCTION: {PluginSettings.RELATIVE_PATH: "settings.production"},
-                SettingsType.COMMON: {PluginSettings.RELATIVE_PATH: "settings.common"},
+                SettingsType.PRODUCTION: {PluginSettings.RELATIVE_PATH: "lms.settings.production"},
+                SettingsType.COMMON: {PluginSettings.RELATIVE_PATH: "lms.settings.common"},
             }
         },
     }
