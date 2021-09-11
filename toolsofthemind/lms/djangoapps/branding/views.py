@@ -17,7 +17,7 @@ from common.djangoapps.edxmako.shortcuts import marketing_link
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 # toolsofthemind
-import toolsofthemind.courseware.views as toolsofthemind_courseware_views
+import toolsofthemind.lms.courseware.views as toolsofthemind_courseware_views
 
 
 @ensure_csrf_cookie
