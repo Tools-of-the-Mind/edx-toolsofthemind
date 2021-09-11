@@ -39,24 +39,24 @@ def get_tom_menu_data(user, courses):
     course_groups = TOMStudentCourseGroups.objects.filter(user=user)
     retval = []
 
-    for group in course_groups:
+    for course_group in list(course_groups):
         retval.append(
             {
-                "id": group.id,
-                "course_group": str(group.course_group),
-                "subgroups": _get_subgroups_for_group(group, courses),
+                "id": course_group.id,
+                "course_group": str(course_group.course_group),
+                "subgroups": _get_subgroups_for_group(course_group, courses),
             }
         )
 
     return retval
 
 
-def _get_subgroups_for_group(group, courses):
+def _get_subgroups_for_group(course_group, courses):
     """
-    Returns the subgroup list for this group, each enhanced with
+    Returns the subgroup list for this course_group, each enhanced with
     its respective courses list.
     """
-    subgroups = TOMCourseSubgroups.objects.filter(course_group=group).order_by("ordinal_position")
+    subgroups = TOMCourseSubgroups.objects.filter(course_group=course_group).order_by("ordinal_position")
     retval = []
 
     for subgroup in subgroups:
@@ -97,17 +97,27 @@ def _get_courses_for_subgroup(subgroup, courses):
 
 def test():
     """
+    from django.contrib.auth import get_user_model
+    from toolsofthemind.utils import get_tom_menu_data
+    from lms.djangoapps.courseware.courses import get_courses
+
+    User = get_user_model()
+    me = User.objects.get(username="mcdaniel")
+    courses = get_courses(me)
+
+    retval = get_tom_menu_data(me, courses)
+
     course_groups = TOMCourseGroups.objects.all()
 
-    # get a list of the course groups assigned to this user.
-    course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
+        # get a list of the course groups assigned to this user.
+        course_groups_list = TOMStudentCourseGroups.objects.filter(user=user)
 
-    # get a list of all course sub-groups related to the user's course groups
-    course_subgroups_list = TOMCourseSubgroups.objects.filter(
-        course_group__in=Subquery(course_groups_list.values("course_group"))
-    )
+        # get a list of all course sub-groups related to the user's course groups
+        course_subgroups_list = TOMCourseSubgroups.objects.filter(
+            course_group__in=Subquery(course_groups_list.values("course_group"))
+        )
 
-    # get a list of all courses related to the course sub-groups
-    course_menu = TOMCourseMenu.objects.filter(course_subgroup__in=Subquery(course_subgroups_list.values("id")))
-    course_menu = list(course_menu.values("id", "course_subgroup_id", "course_id"))
+        # get a list of all courses related to the course sub-groups
+        course_menu = TOMCourseMenu.objects.filter(course_subgroup__in=Subquery(course_subgroups_list.values("id")))
+        course_menu = list(course_menu.values("id", "course_subgroup_id", "course_id"))
     """
