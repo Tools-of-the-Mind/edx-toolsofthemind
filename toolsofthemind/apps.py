@@ -36,7 +36,7 @@ class TOMConfig(AppConfig):
             ProjectType.LMS: {
                 PluginURLs.NAMESPACE: "toolsofthemind",
                 PluginURLs.REGEX: "^toolsofthemind/",
-                PluginURLs.RELATIVE_PATH: "urls",
+                PluginURLs.RELATIVE_PATH: "lms.urls",
             }
         },
         # mcdaniel Sep-2021
