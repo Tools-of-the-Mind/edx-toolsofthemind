@@ -12,8 +12,8 @@ import logging
 from django.db.models import Subquery
 
 # Open edX
-from lms.djangoapps.courseware.courses import get_course
 from lms.djangoapps.courseware.exceptions import CourseRunNotFound
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 # This repo
 from toolsofthemind.models import (
@@ -56,6 +56,7 @@ def get_tom_menu_data(user, courses):
             }
         )
 
+    log.info("DEBUG: retval={retval}".format(retval=retval))
     return retval
 
 
@@ -105,7 +106,7 @@ def _get_courses_for_subgroup(subgroup, courses):
         # importantly, if this particular exception is raised
         # then we should not include the course in the menu.
         try:
-            course = get_course(course_locator)
+            course = CourseOverview.get_from_id(course_locator)
         except CourseRunNotFound:
             log.error(
                 "CourseRunNotFound exception encountered for {data_type} {course_locator}".format(
