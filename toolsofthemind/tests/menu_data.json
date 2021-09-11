@@ -1,1 +1,56 @@
-[{"course_group": "PreK Workshop 1", "subgroups": [{"id": 2, "ordinal_position": 1, "course_subgroup": "Opening Group Activities", "courses": []}, {"id": 3, "ordinal_position": 2, "course_subgroup": "Classroom Practices and Self-Reg", "courses": [<CourseOverview: course-v1:edX+DemoX+Demo_Course>, <CourseOverview: course-v1:toolsofthemind+prek2workshop2+2020_T2>]}, {"id": 4, "ordinal_position": 3, "course_subgroup": "Make-Believe Play Block", "courses": []}, {"id": 5, "ordinal_position": 4, "course_subgroup": "Large Group Literacy", "courses": []}, {"id": 6, "ordinal_position": 5, "course_subgroup": "Small Group Literacy", "courses": []}, {"id": 7, "ordinal_position": 6, "course_subgroup": "Math & Science", "courses": []}]}]
+[
+    {
+       "course_group":"PreK Workshop 1",
+       "subgroups":[
+          {
+             "id":2,
+             "ordinal_position":1,
+             "course_subgroup":"Opening Group Activities",
+             "courses":[
+
+             ]
+          },
+          {
+             "id":3,
+             "ordinal_position":2,
+             "course_subgroup":"Classroom Practices and Self-Reg",
+             "courses":[
+                "<CourseOverview:course-v1:edX+DemoX+Demo_Course>",
+                "<CourseOverview:course-v1:toolsofthemind+prek2workshop2+2020_T2>"
+             ]
+          },
+          {
+             "id":4,
+             "ordinal_position":3,
+             "course_subgroup":"Make-Believe Play Block",
+             "courses":[
+
+             ]
+          },
+          {
+             "id":5,
+             "ordinal_position":4,
+             "course_subgroup":"Large Group Literacy",
+             "courses":[
+
+             ]
+          },
+          {
+             "id":6,
+             "ordinal_position":5,
+             "course_subgroup":"Small Group Literacy",
+             "courses":[
+
+             ]
+          },
+          {
+             "id":7,
+             "ordinal_position":6,
+             "course_subgroup":"Math & Science",
+             "courses":[
+
+             ]
+          }
+       ]
+    }
+ ]
