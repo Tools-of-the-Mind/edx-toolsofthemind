@@ -3,9 +3,8 @@ Common Pluggable Django App settings
 """
 from path import Path as path
 
-PACKAGE_ROOT = path(__file__).abspath().dirname().dirname()  # /toolsofthemind
-REPO_ROOT = PACKAGE_ROOT.dirname()  # edx-toolsofthemind
-LMS_TEMPLATES_DIR = PACKAGE_ROOT / "lms" / "templates"
+LMS_ROOT = path(__file__).abspath().dirname().dirname()  # /toolsofthemind/lms
+LMS_TEMPLATES_DIR = LMS_ROOT / "templates"
 
 
 def plugin_settings(settings):
