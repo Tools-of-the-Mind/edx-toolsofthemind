@@ -3,7 +3,7 @@
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
 
 
-An Open edX plugin that implement custom data models for additional Tools of the Mind categorization for presentation of its course library to registered learners.
+An Open edX plugin that implements custom data models for categorization of the course library for the learner Home and Discovery pages.
 
 ![UI Sample Data](doc/ui-spec.png "Sample Data")
 
