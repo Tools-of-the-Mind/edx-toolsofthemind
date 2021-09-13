@@ -45,6 +45,7 @@ class TOMCourseMenuAdmin(admin.ModelAdmin):
     )
     list_display = [
         "course_subgroup",
+        "ordinal_position",
         "course",
         "required",
         "created",
