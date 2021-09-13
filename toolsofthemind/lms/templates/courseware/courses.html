@@ -2,6 +2,8 @@
 <%!
   import json
   from django.utils.translation import ugettext as _
+  from django.urls import reverse
+  from six import text_type
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
 %>
 <%inherit file="../main.html" />
@@ -11,69 +13,114 @@
 
 <%namespace name='static' file='../static_content.html'/>
 
-% if course_discovery_enabled:
 <%block name="header_extras">
-  % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
-  <script type="text/template" id="${template_name}-tpl">
-      <%static:include path="discovery/${template_name}.underscore" />
-  </script>
-  % endfor
-  <%static:require_module module_name="js/discovery/discovery_factory" class_name="DiscoveryFactory">
-    DiscoveryFactory(
-      ${course_discovery_meanings | n, dump_js_escaped_json},
-      getParameterByName('search_query'),
-      "${user_language | n, js_escaped_string}",
-      "${user_timezone | n, js_escaped_string}"
-    );
-  </%static:require_module>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
+
+<style type="text/css">
+    button {
+        all: revert;
+    }
+
+    input[type="submit"]:hover:not(:disabled), input[type="button"]:hover:not(:disabled), button:hover:not(:disabled), .button:hover:not(:disabled) {
+        background-image: revert;
+    }
+
+    .tom-menu {
+        padding: 50px;
+        background-color: white;
+    }
+
+    .tom-menu ul {
+        margin-left: 25px;
+    }
+
+    .tom-course-group,
+    .tom-course-subgroup {
+        border-radius: 15px !important;
+        text-align: left;
+    }
+    .tom-course-group  {
+        background-color: #2870a7;
+        color: whitesmoke;
+        width: 500px;
+        margin-bottom: 7px;
+    }
+    .tom-course-subgroup {
+        background-color: #cbcccb;
+        color: black;
+        width: 475px;
+        margin-left: 25px;
+    }
+
+    .tom-course {
+        background-color:whitesmoke;
+        width: 425px;
+        height: 30px;
+        margin-left: 50px;
+        margin-top: 7px;
+        padding-top: 5px;
+        padding-left: 15px;
+        border-radius: 15px;
+    }
+
+    .tom-course-group,
+    .tom-course-subgroup,
+    .tom-course a {
+        text-transform: uppercase;
+    }
+    .nav-link {
+        color: whitesmoke;
+    }
+
+    </style>
+<script>
+
+</script>
 </%block>
-% endif
 
 <%block name="pagetitle">${_("Courses")}</%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
       <section class="courses-container">
-        % if course_discovery_enabled:
-        <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
-          <div id="discovery-message" class="search-status-label"></div>
-          <form class="wrapper-search-input">
-            <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-            <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
-            <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
-              <span class="icon fa fa-search" aria-hidden="true"></span>
-              <div aria-live="polite" aria-relevant="all">
-                <div id="loading-indicator" class="loading-spinner hidden">
-                  <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
-                  <span class="sr">${_('Loading')}</span>
-                </div>
-              </div>
-            </button>
-          </form>
-        </div>
 
-        <div id="filter-bar" class="filters hide-phone is-collapsed">
-        </div>
-        % endif
+        <div class="tom-menu courses" role="region" aria-label="${_('List of Courses')}">
+            ##-------------------------------------------------
+            ## mcdaniel sep-2021: Tools of the Mind custom menu
+            ##
+            ## see: https://getbootstrap.com/docs/5.0/examples/sidebars/#
+            ##-------------------------------------------------
 
-        <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
-          <ul class="courses-listing courses-list">
-            %for course in courses:
-            <li class="courses-listing-item">
-              <%include file="../course.html" args="course=course" />
-            </li>
-            %endfor
-          </ul>
-        </div>
-
-
-        % if course_discovery_enabled:
-        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
-          <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
-          <section class="search-facets-lists">
-          </section>
-        </aside>
-        % endif
+            <ul class="list-unstyled ps-0">
+                % for course_group in course_groups:
+                <li class="mb-1">
+                  <button class="tom-course-group btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#course-group${course_group['course_group'].id}" aria-expanded="true">
+                    ${course_group["course_group"]}
+                  </button>
+                  <div class="collapse show" id="course-group${course_group['course_group'].id}">
+                    <ul class="btn-toggle-nav list-unstyled ps-0">
+                        % for course_subgroup in course_group["course_subgroups"]:
+                        <li class="mb-1">
+                          <button class="tom-course-subgroup btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#course-subgroup${course_subgroup['course_subgroup'].ordinal_position}" aria-expanded="true">
+                            ${course_subgroup["course_subgroup"]}
+                          </button>
+                          <div class="collapse show" id="course-subgroup${course_subgroup['course_subgroup'].ordinal_position}">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                % for course in course_subgroup["courses"]:
+                                <li class="tom-course">
+                                    <a class="link-dark rounded" href="${reverse('about_course', args=[text_type(course.id)])}">${course.display_name_with_default}</a>
+                                </li>
+                                %endfor
+                            </ul>
+                          </div>
+                        </li>
+                        %endfor
+                    </ul>
+                  </div>
+                </li>
+                %endfor
+            </ul>
 
       </section>
     </section>
