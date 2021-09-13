@@ -63,6 +63,7 @@ class TOMCourseSubgroups(TimeStampedModel):
     ordinal_position = models.IntegerField(
         help_text="The ordinal position of this record in relation to all other"
         "Sub Group items for this Tools of the Mind Course Group.",
+        blank=False,
     )
     course_subgroup = models.CharField(max_length=50, blank=False)
 
@@ -85,6 +86,7 @@ class TOMCourseMenu(TimeStampedModel):
     ordinal_position = models.IntegerField(
         help_text="The ordinal position of this record in relation to all other"
         "Sub Group items for this Tools of the Mind Course Group.",
+        blank=False,
     )
 
     course_subgroup = models.ForeignKey(
