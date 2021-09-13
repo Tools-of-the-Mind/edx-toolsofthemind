@@ -37,14 +37,13 @@ class TOMCourseGroups(TimeStampedModel):
     """
 
     course_group = models.CharField(
-        primary_key=True,
         max_length=50,
-        default="new course group",
         help_text=_("Tools of the Mind course group description. Example: PreK Workshop 1"),
     )
 
     class Meta:
         ordering = ["created"]
+        constraints = [models.UniqueConstraint(fields=["course_group"], name="unique_course_group")]
 
     def __str__(self):
         return self.course_group
@@ -83,6 +82,11 @@ class TOMCourseMenu(TimeStampedModel):
     The set of Open edX courses associated with one TOM Course Group / Sub-group combination.
     """
 
+    ordinal_position = models.IntegerField(
+        help_text="The ordinal position of this record in relation to all other"
+        "Sub Group items for this Tools of the Mind Course Group.",
+    )
+
     course_subgroup = models.ForeignKey(
         TOMCourseSubgroups,
         db_constraint=True,
@@ -98,8 +102,8 @@ class TOMCourseMenu(TimeStampedModel):
     required = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (("course_subgroup", "course"),)
-        ordering = ("course_subgroup", "course")
+        unique_together = (("course_subgroup", "course"), ("course_subgroup", "ordinal_position"))
+        ordering = ("course_subgroup", "ordinal_position")
 
     def __str__(self):
         return self.course_subgroup.course_subgroup + ":" + str(self.course.id)

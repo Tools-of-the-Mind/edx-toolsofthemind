@@ -47,13 +47,11 @@ def get_tom_menu_data(user, courses):
     )
 
     retval = []
-    i = 0
 
     for course_group in course_groups:
-        i += 1
         retval.append(
             {
-                "id": i,
+                "id": course_group.id,
                 "course_group": course_group.course_group,
                 "subgroups": _get_subgroups_for_group(course_group, courses),
             }
