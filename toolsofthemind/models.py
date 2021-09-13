@@ -75,7 +75,7 @@ class TOMCourseSubgroups(TimeStampedModel):
         ordering = ("course_group", "ordinal_position")
 
     def __str__(self):
-        return self.course_group.course_group + ":" + self.course_subgroup
+        return self.course_group.course_group + ": " + str(self.ordinal_position) + ".) " + self.course_subgroup
 
 
 class TOMCourseMenu(TimeStampedModel):
