@@ -51,9 +51,8 @@ def get_tom_menu_data(user, courses):
     for course_group in course_groups:
         retval.append(
             {
-                "id": course_group.id,
-                "course_group": course_group.course_group,
-                "subgroups": _get_subgroups_for_group(course_group, courses),
+                "course_group": course_group,
+                "course_subgroups": _get_subgroups_for_group(course_group, courses),
             }
         )
 
@@ -72,9 +71,7 @@ def _get_subgroups_for_group(course_group, courses):
     for subgroup in subgroups:
         retval.append(
             {
-                "id": subgroup.id,
-                "ordinal_position": subgroup.ordinal_position,
-                "course_subgroup": subgroup.course_subgroup,
+                "course_subgroup": subgroup,
                 "courses": _get_courses_for_subgroup(subgroup, courses),
             }
         )
