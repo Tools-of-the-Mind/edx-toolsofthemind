@@ -9,6 +9,7 @@ Courseware views functions
 # Django
 from django.conf import settings
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth.decorators import login_required
 from common.djangoapps.util.cache import cache_if_anonymous
 
 # Open edX
@@ -22,6 +23,7 @@ from toolsofthemind.utils import get_tom_menu_data
 
 
 @ensure_csrf_cookie
+@login_required
 @cache_if_anonymous()
 def courses(request):
     """
