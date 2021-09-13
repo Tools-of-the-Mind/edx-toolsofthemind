@@ -42,9 +42,8 @@ def get_tom_menu_data(user, courses):
     see: openedx.core.djangoapps.courses.models.CourseOverview
     """
     student_course_groups = TOMStudentCourseGroups.objects.filter(user=user)
-    course_groups = TOMCourseGroups.objects.filter(
-        course_group__in=Subquery(student_course_groups.values("course_group"))
-    )
+
+    course_groups = TOMCourseGroups.objects.filter(id__in=Subquery(student_course_groups.values("course_group")))
 
     retval = []
 
