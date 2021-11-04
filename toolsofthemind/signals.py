@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.dispatch.dispatcher import receiver
 from django.db.models.signals import post_save
@@ -5,6 +7,7 @@ from django.db.models.signals import post_save
 from .models import TOMStudentCourseGroups
 
 User = get_user_model()  # returns common.djangoapps.student.models
+log = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=User)
@@ -24,5 +27,6 @@ def _add_tom_student_course_groups(
 
     """
     if created:
-        student_course_groups = TOMStudentCourseGroups(user=instance)
-        student_course_groups.save()
+        log.info("Django signal recieved for a new user, but creation of TOMStudentCourseGroups has been disabled.")
+        # student_course_groups = TOMStudentCourseGroups(user=instance)
+        # student_course_groups.save()
